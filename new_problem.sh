@@ -1,10 +1,25 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-read -p "enter problem name: " problem_name
+read -p "enter problem name: " NAME
 
-read -p "Do you want to create ./${problem_name} and ./${problem_name}/${problem_name}.py ? [yes/no] " confirmation
-if [[ ${confirmation} == yes ]]; then
-    mkdir ./${problem_name}
-    touch "./${problem_name}/${problem_name}.py"
+NAME="${NAME,,}" # make lowercase
+NAME="${NAME// /_}" #replace ' ' with '_'
+# get rid of special characters
+SCRIPTNAME=$NAME
+SCRIPTNAME="${SCRIPTNAME//[á]/a}"
+SCRIPTNAME="${SCRIPTNAME//[ð]/d}"
+SCRIPTNAME="${SCRIPTNAME//[é]/e}"
+SCRIPTNAME="${SCRIPTNAME//[í]/i}"
+SCRIPTNAME="${SCRIPTNAME//[ó]/o}"
+SCRIPTNAME="${SCRIPTNAME//[ú]/u}"
+SCRIPTNAME="${SCRIPTNAME//[ý]/y}"
+SCRIPTNAME="${SCRIPTNAME//[þ]/th}"
+SCRIPTNAME="${SCRIPTNAME//[æ]/ae}"
+SCRIPTNAME="${SCRIPTNAME//[ö]/o}"
+
+read -p "Do you want to create ./${NAME} and ./${NAME}/${SCRIPTNAME}.py ? [yes/no] " CONFIRMATION
+if [[ ${CONFIRMATION} == yes ]]; then
+    mkdir "./${NAME}"
+    touch "./${NAME}/${SCRIPTNAME}.py"
     echo "SUCCESS!"
 fi
