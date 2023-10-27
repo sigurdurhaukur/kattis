@@ -53,7 +53,7 @@ class Kattis:
             f.write(self.markdown_content)
 
         # create solution file
-        with open(f"{self.name}/{self.name}.py", "w") as f:
+        with open(f"{self.name}/{self.name}.cpp", "w") as f:
             f.write("")
 
     def __str__(self) -> str:

@@ -20,6 +20,7 @@ SCRIPTNAME="${SCRIPTNAME//[ö]/o}"
 read -p "Do you want to create ./${NAME} and ./${NAME}/${SCRIPTNAME}.py ? [yes/no] " CONFIRMATION
 if [[ ${CONFIRMATION} == yes ]]; then
     mkdir "./${NAME}"
-    touch "./${NAME}/${SCRIPTNAME}.py"
+    touch "./${NAME}/${SCRIPTNAME}.cpp"
+    cd "./${NAME}"
     echo "SUCCESS!"
 fi
