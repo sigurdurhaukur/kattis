@@ -1,30 +1,23 @@
 #include <cmath>
 #include <iostream>
+
 using namespace std;
 
-int msbPos(int n) {
-  int pos = 0;
-  while (n != 0) {
-    pos++;
-    n = n >> 1;
-  }
-  return pos;
-}
-
-int josephify(int n) {
-  int position = msbPos(n);
-
-  int j = 1 << (position - 1);
-  n = n ^ j;
-  n = n << 1;
-  n = n | 1;
-
-  return n;
-}
-
 int main() {
-  int n;
+  long long n;
   cin >> n;
-  cout << josephify(n) << '\n';
-  return 0;
+
+  // long long k = floor(sqrt(n));
+  long long k = 1;
+
+  // Find the largest power of 2 that is less than or equal to 'n'
+  while (k <= n) {
+    k <<= 1;
+  }
+  k >>= 1;
+
+  // Calculate 'final' using a simplified expression
+  long long final = (n - k) * 2 + 1;
+
+  cout << final << endl;
 }
