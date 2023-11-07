@@ -7,12 +7,10 @@ using namespace std;
 
 bool handle_bad_guys(vector<char>& backpack, char item) {
   char lower = tolower(item);
-  int index_of_money =
-      find(backpack.begin(), backpack.end(), lower) - backpack.begin();
-
-  if (index_of_money != backpack.size()) {
-    // erase everything from the beginning to the index of the money to the
-    // end
+  auto rlast = find(backpack.rbegin(), backpack.rend(), lower);
+  if (rlast != backpack.rend()) {
+    int index_of_money = backpack.rend() - rlast - 1;
+    // erase everything from the beginning to the index of the money to the end
     backpack.erase(backpack.begin() + index_of_money, backpack.end());
     return true;
   } else {
