@@ -1,0 +1,11 @@
+5
+Jormunrekur
+Grimmhildur
+Hrollleifur
+Hneitir
+Gudrun
+4
+3 Hneitir Gudrun Jormunrekur
+3 Gudrun Grimmhildur Hrollleifur
+0
+1 Gudrun
