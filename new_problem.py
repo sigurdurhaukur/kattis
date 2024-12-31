@@ -10,6 +10,7 @@ class Kattis:
         self.url = url
         self.name = self.get_name_from_url()
         self.description = ""
+        self.file_extension = ".cpp"
 
         try:
             self.get_problem_data()
@@ -36,9 +37,14 @@ class Kattis:
 
     def get_name_from_url(self):
         # get the last part of the url
-        name = self.url.split("/")[-1]
+        names = self.url.split("/")
 
+        name = names[-1]
         name = name.replace("iceland.", "")
+
+        if name == "en":
+            name = names[-2]
+
         return name
 
     def setup_problem(self):
@@ -53,8 +59,32 @@ class Kattis:
             f.write(self.markdown_content)
 
         # create solution file
-        with open(f"{self.name}/{self.name}.cpp", "w") as f:
+        with open(f"{self.name}/{self.name}{self.file_extension}", "w") as f:
             f.write("")
+
+        if (self.file_extension == ".cpp"):
+            with open(f"{self.name}/run.sh", "w") as f:
+                script = f"#!/bin/bash\ng++ -std=c++17 {self.name}.cpp -o {self.name}.out\n./{self.name}.out\n"
+                f.write(script)
+
+        print(f"New problem created:\n cd ./{self.name}")
+
+        # create and open tmux session
+        os.system(f"tmux new-session -d -s {self.name}")
+        os.system(f"tmux send-keys -t {self.name} 'cd {self.name}' Enter")
+        os.system(f"tmux attach-session -t {self.name}")
+
+
+        print(f"tmux session created: {self.name}")
+
+        is_done = input("Are you done? (y/N) ")
+        if is_done.lower() == "y":
+
+            # rename folder to DONE_{name}
+            os.rename(self.name, f"DONE_{self.name}")
+
+        os.system(f"tmux kill-session -t {self.name}")
+        print(f"tmux session killed: {self.name}")
 
     def __str__(self) -> str:
         return self.markdown_content
@@ -68,5 +98,8 @@ if __name__ == "__main__":
     url = sys.argv[1]
 
     kattis = Kattis(url)
+
+    file_extension = input("What file extension (.cpp /.py) ")
+    kattis.file_extension = file_extension
 
     kattis.setup_problem()
